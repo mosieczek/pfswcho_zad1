@@ -1,6 +1,8 @@
 package com.dockerforjavadevelopers.hello;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +20,7 @@ public class HelloController {
     }
 
     @GetMapping("/oblicz/{value}")
-    public String calc(@PathVariable int value) {
+    public Map<String, String> calc(@PathVariable int value) {
         int result = 0;
         String response;
         if(value > 0 && value <= 20){
@@ -41,8 +43,9 @@ public class HelloController {
             response= "Podano zla wartosc K";
         }
         response = Integer.toString(result);
-        Response res = new Response(response);
-        return res;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("key", response);
+        return map;
     }
     
 }
