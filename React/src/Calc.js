@@ -6,23 +6,38 @@ export default function Calc() {
     const [result, setResult] = useState(0)
     document.title = "Fib Cal"
     function count(){
-      if(value > 0 && value <= 20){
-        setResult(0)
-        if(parseInt(value) === 1 || parseInt(value) === 2){
-          setResult(1)
+      // if(value > 0 && value <= 20){
+      //   setResult(0)
+      //   if(parseInt(value) === 1 || parseInt(value) === 2){
+      //     setResult(1)
+      //   }
+      //   else{
+      //     let firstVal = 1, secondVal = 1, tempRes 
+      //     for(let i = 2; i < value; i++){
+      //       tempRes = firstVal + secondVal
+      //       firstVal = secondVal
+      //       secondVal = tempRes
+      //       setResult(tempRes)
+      //     }
+      //   }
+      // }else{
+      //   setResult("Podano zla wartosc K")
+      // }
+      const baseUrl = `http://localhost:8080/fib/oblicz/${value}`
+      console.log(baseUrl)
+      fetch(baseUrl,{
+        method:'get',
+        headers: {
+          'Content-Type': 'application/json'
         }
-        else{
-          let firstVal = 1, secondVal = 1, tempRes 
-          for(let i = 2; i < value; i++){
-            tempRes = firstVal + secondVal
-            firstVal = secondVal
-            secondVal = tempRes
-            setResult(tempRes)
-          }
-        }
-      }else{
-        setResult("Podano zla wartosc K")
-      }
+      })
+      .then((response) => {
+        setResult(response.data)
+        console.log(response)
+        const testRes = response.data
+        console.log(testRes)
+      })
+      
     }
 
     function history(){
