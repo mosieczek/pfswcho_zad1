@@ -1,7 +1,17 @@
-#postgres server is visible as pgsql-server in pgadmin panel
+version: "3.0"
 
-version: "3.5"
 services:
+  spring-boot-backend:
+    depends_on:
+      - db
+    stdin_open: true
+    environment: 
+        - CHOKIDAR_USEPOLLING=true
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
   db:
     image: mysql:5.7
     container_name: db
@@ -26,5 +36,14 @@ services:
     restart: always
     ports:
       - 8081:80
+  react-frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
 volumes:
   dbdata:
+  frontend:
