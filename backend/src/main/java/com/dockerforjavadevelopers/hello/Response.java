@@ -4,21 +4,34 @@
  */
 package com.dockerforjavadevelopers.hello;
 
-import com.fasterxml.jackson.annotation.JsonView;
+
+import javax.persistence.*;
 
 /**
  *
  * @author Adriana Osmulska
  */
+@Entity
 public class Response {
-    @JsonView
-    private String value;
+
+    @GeneratedValue
+    @Id
+    private Long id;
+
+    @Column
+    private int inputedValue;
+
+    @Column
+    private Long result;
+
 
     public Response() {
     }
 
-    public Response(String value) {
-        this.value = value;
+    public Response(Long id, int inputedValue, Long result) {
+        this.id = id;
+        this.inputedValue = inputedValue;
+        this.result = result;
     }
     
 }

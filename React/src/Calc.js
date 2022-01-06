@@ -1,20 +1,19 @@
 import React from 'react'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import axios from 'axios'
 
 export default function Calc() {
     const [value, setValue] = useState(0)
-    const [result, setResult] = useState([])
+    const [result, setResult] = useState(0)
     document.title = "Fib Cal"
     function count(){
+
       const baseUrl = `http://localhost:8080/fib/oblicz/${value}`
-      axios.get(baseUrl,{
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+
+
+      axios.get(baseUrl,{})
       .then((response) => {
-        setResult(response.data)
+        setResult(response.data);
       })
       
     }
@@ -22,9 +21,6 @@ export default function Calc() {
     function history(){
       console.log("historia")
     }
-    useEffect(() => {
-      console.log(result)
-    }, [result])
     return(
         <div className="App">
             <h1>Kalkulator Fibonacciego</h1>
