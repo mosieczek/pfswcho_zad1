@@ -1,41 +1,20 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import axios from 'axios'
 
 export default function Calc() {
     const [value, setValue] = useState(0)
-    const [result, setResult] = useState(0)
+    const [result, setResult] = useState([])
     document.title = "Fib Cal"
     function count(){
-      // if(value > 0 && value <= 20){
-      //   setResult(0)
-      //   if(parseInt(value) === 1 || parseInt(value) === 2){
-      //     setResult(1)
-      //   }
-      //   else{
-      //     let firstVal = 1, secondVal = 1, tempRes 
-      //     for(let i = 2; i < value; i++){
-      //       tempRes = firstVal + secondVal
-      //       firstVal = secondVal
-      //       secondVal = tempRes
-      //       setResult(tempRes)
-      //     }
-      //   }
-      // }else{
-      //   setResult("Podano zla wartosc K")
-      // }
       const baseUrl = `http://localhost:8080/fib/oblicz/${value}`
-      console.log(baseUrl)
-      fetch(baseUrl,{
-        method:'get',
+      axios.get(baseUrl,{
         headers: {
           'Content-Type': 'application/json'
         }
       })
       .then((response) => {
         setResult(response.data)
-        console.log(response)
-        const testRes = response.data
-        console.log(testRes)
       })
       
     }
@@ -43,6 +22,9 @@ export default function Calc() {
     function history(){
       console.log("historia")
     }
+    useEffect(() => {
+      console.log(result)
+    }, [result])
     return(
         <div className="App">
             <h1>Kalkulator Fibonacciego</h1>
@@ -51,7 +33,7 @@ export default function Calc() {
           <input id='inputValue' onChange={(e) => {setValue(e.target.value)}} type='text'/>
           <br/>
           <button onClick={count}>Oblicz</button>
-          K-ty element ciagu Fibonacciego: {result}
+          K-ty element ciagu Fibonacciego: {result.val}
           
           <button onClick={history}>Historia</button>
 

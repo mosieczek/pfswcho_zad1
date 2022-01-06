@@ -44,7 +44,7 @@ public class HelloController {
         }
         response = Integer.toString(result);
         HashMap<String, String> map = new HashMap<>();
-        map.put("key", response);
+        map.put("val", response);
         return map;
     }
     
