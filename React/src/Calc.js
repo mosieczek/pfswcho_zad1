@@ -5,13 +5,15 @@ import axios from 'axios'
 export default function Calc() {
     const [value, setValue] = useState(0)
     const [result, setResult] = useState(0)
+    const [historyRes, setHistoryRes] = useState([])
+    const [showHistory, setShowHistory] = useState(false)
+
     document.title = "Fib Cal"
     function count(){
 
       const baseUrl = `http://localhost:8080/fib/oblicz/${value}`
 
-
-      axios.get(baseUrl,{})
+      axios.post(baseUrl,{})
       .then((response) => {
         setResult(response.data);
       })
@@ -19,7 +21,13 @@ export default function Calc() {
     }
 
     function history(){
-      console.log("historia")
+      const baseUrl = `http://localhost:8080/fib/history`
+
+      axios.get(baseUrl,{})
+      .then((response) => {
+        setHistoryRes(response.data.content);
+      })
+      setShowHistory(!showHistory)
     }
     return(
         <div className="App">
@@ -33,6 +41,28 @@ export default function Calc() {
           
           <button onClick={history}>Historia</button>
 
+              {showHistory?(<div>
+                <h3>Historia obliczeń</h3>
+                <table border = "1">
+                  <thead>
+                    <tr>
+                      <th>Wprowadzona wartość</th>
+                      <th>Wynik</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {historyRes.map((item) => 
+                    <tr>
+                      <td>{item.inputedValue}</td>
+                      <td>{item.result}</td>
+                    </tr>
+                )}
+                      </tbody>
+                </table>
+              </div>):(<div></div>)}
+            
+          
+          
         </header>
       </div>
         
